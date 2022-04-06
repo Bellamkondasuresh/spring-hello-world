@@ -4,7 +4,7 @@ pipeline {
     stages{
         stage ('Code Download From GIT'){
             steps{
-                sh 'https://github.com/Bellamkondasuresh/spring-hello-world.git'
+                git 'https://github.com/Bellamkondasuresh/spring-hello-world.git'
             }
         }
          
@@ -18,6 +18,7 @@ pipeline {
         stage('Build & Deploy APP in Docker'){
             agent{ label "deploy_server"}
             steps{
+                dir('/home/jenkins')
                 sh "sudo docker image build -t ceq_spring:1.0 ."
                 sh "sudo docker container run -d -p 8081:8081 ceq_spring:1.0 "
                            
