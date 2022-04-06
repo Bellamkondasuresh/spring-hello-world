@@ -1,5 +1,5 @@
 FROM maven:3-jdk-11 as builder
-RUN git clone https://github.com/Phani-1982/spring-hello-world.git
+RUN git https://github.com/Bellamkondasuresh/spring-hello-world.git
 RUN cd /spring-hello-world
 WORKDIR /spring-hello-world
 RUN mvn clean package
