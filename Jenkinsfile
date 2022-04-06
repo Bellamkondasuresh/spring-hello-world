@@ -2,7 +2,7 @@ pipeline {
     agent{ label "MASTER" }
     triggers{ pollSCM('* * * * *') }
     stages{
-        stage ('Code Download From SCM'){
+        stage ('Code Download From GIT'){
             steps{
                 git 'https://github.com/Bellamkondasuresh/spring-hello-world.git'
             }
