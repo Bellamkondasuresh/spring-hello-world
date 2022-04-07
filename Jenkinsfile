@@ -4,7 +4,7 @@ pipeline {
     stages{
         stage ('Code Download From GIT'){
             steps{
-                sh "git clone https://github.com/Bellamkondasuresh/spring-hello-world.git"
+                git 'https://github.com/Bellamkondasuresh/spring-hello-world.git'
             }
         }
          
@@ -15,9 +15,10 @@ pipeline {
                 sh "ansible-playbook -i $WORKSPACE/spring-hello-world/inventory $WORKSPACE/myplaybook.yml"
             }            
         }
-        stage('Build & Deploy APP in Docker'){
+        stage('Deploy'){
             agent{ label "deploy_server"}
             steps{
+                sh "cd /home/jenkins"
                 sh "sudo docker image build -t ceq_spring:1.0 ."
                 sh "sudo docker container run -d -p 8081:8081 ceq_spring:1.0 "
                            
