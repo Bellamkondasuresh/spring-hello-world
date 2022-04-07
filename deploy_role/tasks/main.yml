@@ -3,7 +3,7 @@
 - name: Copy Dockerfile to Deployserver
   become: true 
   copy:
-    src: /var/lib/jenkins/workspace/cloudeq-spring/Dockerfile
+    src: /var/lib/jenkins/cloudeq-spring/Dockerfile
     dest: /home/jenkins/Dockerfile
 
     
