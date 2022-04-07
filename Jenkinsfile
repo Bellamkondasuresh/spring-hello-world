@@ -3,7 +3,7 @@ pipeline {
     stages{
         stage ('Code Download From SCM'){
             steps{
-                git 
+                git 'https://github.com/Bellamkondasuresh/spring-hello-world.git'
                 stash name: 'Dockerfile', includes: 'Dockerfile'
             }
         }
