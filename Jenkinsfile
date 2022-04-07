@@ -7,3 +7,5 @@ pipeline {
                 sh "git clone https://github.com/Bellamkondasuresh/spring-hello-world.git"
             }
         }
+    }
+    
