@@ -1,23 +1,27 @@
 pipeline { 
-    agent{ label "MASTER"}
+    agent{ label "MASTER" }
+    triggers{ pollSCM('* * * * *') }
     stages{
-        stage ('Code Download From SCM'){
+        stage ('Code Download From GIT'){
             steps{
-                git 'https://github.com/Bellamkondasuresh/spring-hello-world.git'
-                stash name: 'Dockerfile', includes: 'Dockerfile'
+                sh 
             }
         }
-        stage('GOF Docker Run'){
-            agent{ label "docker-slave" }
+         
+        stage('Deploy_Server_setup'){
             steps{
-                dir('/home/jenkins'){
-                      unstash name: 'Dockerfile'                                                                                           
-                }   
-                sh '''
-                   docker image build -t hairavi10/gameoflife:05.20 /home/jenkins
-                   docker run -d -p 8081:8080 suresh9177/gameoflife:05.20
-                   '''
-            }
+                sh "ansible -m ping -i $WORKSPACE/spring-hello-world/inventory all"
+                sh "ansible-playbook -i $WORKSPACE/spring-hello-world/inventory $WORKSPACE/myplaybook.yml --syntax-check"
+                sh "ansible-playbook -i $WORKSPACE/spring-hello-world/inventory $WORKSPACE/myplaybook.yml"
+            }            
         }
-        
+        stage('Build & Deploy APP in Docker'){
+            agent{ label "deploy_server"}
+            steps{
+                sh "sudo docker image build -t ceq_spring:1.0 ."
+                sh "sudo docker container run -d -p 8081:8081 ceq_spring:1.0 "
+                           
+            }
+        } 
     }
+}
