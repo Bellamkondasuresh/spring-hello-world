@@ -15,7 +15,7 @@ pipeline {
                 sh "ansible-playbook -i $WORKSPACE/spring-hello-world/inventory $WORKSPACE/myplaybook.yml"
             }            
         }
-        stage('Deploy'){
+        stage('Build & Deploy APP in Docker'){
             agent{ label "deploy_server"}
             steps{
                 sh "cd /home/jenkins"
