@@ -1,5 +1,5 @@
 pipeline { 
-    agent{ label "MAIN"}
+    agent{ label "MASTER"}
     stages{
         stage ('Code Download From SCM'){
             steps{
